@@ -49,7 +49,13 @@ public class Bag {
         return List.copyOf(cuboids);
     }
 
+    /**
+     * Adds a cuboid on the bag, additionally calculates the volume of the bag for each new cuboid.
+     * @param cuboid The {@link Cuboid} to add to this bag, cannot be null.
+     */
     public void addCuboid(Cuboid cuboid) {
-        cuboids.add(cuboid);
+        if (cuboid != null) {
+            cuboids.add(cuboid);
+        }
     }
 }

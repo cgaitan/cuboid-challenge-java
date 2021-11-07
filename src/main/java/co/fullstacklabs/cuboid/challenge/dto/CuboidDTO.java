@@ -21,8 +21,21 @@ public class CuboidDTO {
     @NotNull(message = "Cuboid depth can't be null.")
     private Float depth;
 
-    private Double volume;
-
     @NotNull(message = "Cuboid related bag can't be null.")
     private Long bagId;
+
+    private Double volume;
+
+    /**
+     * Calculates this cuboid volume.
+     *
+     * @return The calculated volume of this cuboid.
+     */
+    public Double getVolume() {
+        if (width != null && height != null && depth != null) {
+            return (double) (width * height * depth);
+        }
+        return 0d;
+    }
+
 }
