@@ -29,4 +29,13 @@ public class Cuboid {
     @ManyToOne
     @JoinColumn(name = "BAG_ID", nullable = false)
     private Bag bag;
+
+    /**
+     * Calculates this cuboid volume.
+     *
+     * @return The calculated volume of this cuboid.
+     */
+    public double getVolume() {
+        return width * height * depth;
+    }
 }
