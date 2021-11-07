@@ -2,6 +2,7 @@ package co.fullstacklabs.cuboid.challenge.service.impl;
 
 import co.fullstacklabs.cuboid.challenge.dto.CuboidDTO;
 import co.fullstacklabs.cuboid.challenge.exception.ResourceNotFoundException;
+import co.fullstacklabs.cuboid.challenge.exception.UnprocessableEntityException;
 import co.fullstacklabs.cuboid.challenge.model.Bag;
 import co.fullstacklabs.cuboid.challenge.model.Cuboid;
 import co.fullstacklabs.cuboid.challenge.repository.BagRepository;
@@ -48,9 +49,13 @@ public class CuboidServiceImpl implements CuboidService {
     public CuboidDTO create(CuboidDTO cuboidDTO) {
         Bag bag = getBagById(cuboidDTO.getBagId());
         Cuboid cuboid = mapper.map(cuboidDTO, Cuboid.class);
-        cuboid.setBag(bag);
-        cuboid = repository.save(cuboid);
-        return mapper.map(cuboid, CuboidDTO.class);
+        if (bag.canHold(cuboid)) {
+            cuboid.setBag(bag);
+            cuboid = repository.save(cuboid);
+            return mapper.map(cuboid, CuboidDTO.class);
+        } else {
+            throw new UnprocessableEntityException("Cannot hold anymore cuboids.");
+        }
     }
 
     /**
